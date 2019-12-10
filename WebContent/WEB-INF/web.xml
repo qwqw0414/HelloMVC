@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>03_HelloMVC</display-name>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  <session-config>
+    <session-timeout>5</session-timeout>
+  </session-config>
+  <servlet>
+    <servlet-name>MemberEnrollServlet</servlet-name>
+    <jsp-file>/WEB-INF/views/member/memberEnroll.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MemberEnrollServlet</servlet-name>
+    <url-pattern>/member/memberEnroll</url-pattern>
+  </servlet-mapping>
+  <filter>
+    <filter-name>LoggerFilter</filter-name>
+    <filter-class>common.filter.LoggerFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>LoggerFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <filter>
+    <filter-name>EncodeFilter</filter-name>
+    <filter-class>common.filter.EncodeFilter</filter-class>
+    <init-param>
+      <param-name>encodeType</param-name>
+      <param-value>utf-8</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>EncodeFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+</web-app>
