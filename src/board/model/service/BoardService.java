@@ -15,9 +15,9 @@ public class BoardService {
 
 	public List<Board> selectBoardList(int cPage, int numPerPage) {
 		Connection conn = getConnection();
-		List<Board> list 
-			= new BoardDAO().selectBoardList(conn, cPage, numPerPage);
+		List<Board> list = new BoardDAO().selectBoardList(conn, cPage, numPerPage);
 		close(conn);
+
 		return list;
 	}
 
@@ -31,19 +31,34 @@ public class BoardService {
 	public int insertBoard(Board b) {
 		Connection conn = getConnection();
 		int result = new BoardDAO().insertBoard(conn, b);
-		//트랜잭션 처리
-		if(result>0) 
+		// 트랜잭션 처리
+		if (result > 0)
 			commit(conn);
-		else 
+		else
 			rollback(conn);
+
 		close(conn);
+
 		return result;
 	}
-	
-	
-	
-	
-	
-	
 
+	public Board selectOne(int boardNo, boolean hasRead) {
+		Connection conn = getConnection();
+		int result = 0;
+		
+		if(!hasRead) {
+			result = new BoardDAO().increaseReadCount(conn, boardNo);
+		}
+
+		Board b = new BoardDAO().selectOne(conn, boardNo);
+
+		if (result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+
+		close(conn);
+
+		return b;
+	}
 }
